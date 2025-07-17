@@ -1,11 +1,26 @@
-// App.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BrevoChat from "./BrevoChat";
 
 function App() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 600);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Welcome to MediBharat</h1>
+      <h1
+        style={{
+          ...styles.title,
+          fontSize: isMobile ? "1.5rem" : "2rem",
+          maxWidth: isMobile ? "90%" : "600px",
+        }}
+      >
+        Welcome to MediBharat
+      </h1>
       <p style={styles.subtitle}>
         We're here to help! Use the chat widget in the corner.
       </p>
@@ -17,7 +32,7 @@ function App() {
 const styles = {
   container: {
     height: "100vh",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#F5F5F5",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -28,8 +43,8 @@ const styles = {
   },
   title: {
     color: "#333",
-    fontSize: "2rem",
     margin: "0 0 10px",
+    lineHeight: 1.2,
   },
   subtitle: {
     color: "#555",
